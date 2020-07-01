@@ -3,19 +3,25 @@ import os
 import itertools
 from datetime import datetime
 
+
 class LexGen:
     def __init__(self):
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
+        self.lang_dict = None
+        self.corpora = None
+        self.trans_mats = None
 
-        self.lang_dict = self.read_lang_dict()
-        # this is a df with cols = [lang_code, lang_name]
-        # later, this will become reading the languages table
-        self.corpora = self.scan_corpora()
-        # this is df with cols = [corpus_name, corpus_filepath]
-        # later, this will become reading the corpora table
-        self.trans_mats = self.scan_trans_mats()
-        # this is a dataframe with cols = [corpus_name, prefix_len, trans_matrix_filepath]
-        # later, this will become reading the transition_matrices table
+        self.read_lang_dict()
+        # populates self.lang_dict pandas df with cols = [lang_code, lang_name]
+        # later, this will become reading the languages table from a database
+
+        self.scan_corpora()
+        # populates self.corpora pandas df with cols = [corpus_name, corpus_filepath]
+        # later, this will become reading the corpora table from a database
+
+        self.scan_trans_mats()
+        # populates trans_mats pandas df with cols = [corpus_name, prefix_len, trans_matrix_filepath]
+        # later, this will become reading the transition_matrices table from a database
 
     def read_lang_dict(self):
         # check to see if file exists
@@ -23,7 +29,7 @@ class LexGen:
         # check to see if data exists (rows > 0)
         # check to see if datatypes are valid (alphabetic strings, non-numeric)
         abs_fname = os.path.join(self.script_dir, 'data', 'ref', 'lang_ref.dat')
-        return pd.read_csv(abs_fname)
+        self.lang_dict = pd.read_csv(abs_fname)
 
     def scan_corpora(self):
         # read all files in data/corpora subfolder of current directory
@@ -31,7 +37,7 @@ class LexGen:
         # the .rsplit('.', 1)[0] drops the file extension
         corpora_files = [f.rsplit('.', 1)[0] for f in os.listdir(corpora_path) if os.path.isfile(os.path.join(corpora_path, f))]
         corpora_indiv_paths = [os.path.join(corpora_path, p + '.dat') for p in corpora_files]
-        return pd.DataFrame(list(zip(corpora_files, corpora_indiv_paths)), columns=['corpus_name', 'corpus_filepath'])
+        self.corpora = pd.DataFrame(list(zip(corpora_files, corpora_indiv_paths)), columns=['corpus_name', 'corpus_filepath'])
 
     def scan_trans_mats(self):
         # create a dataframe with spaces for all of the corpora
@@ -70,7 +76,7 @@ class LexGen:
             except OSError as e:
                 pass
 
-        return trans_mat_df
+        self.trans_mats = trans_mat_df
 
     def load_corpus(self, corpus_name, corpus_file):
         # read in the corpus line by line
@@ -81,27 +87,57 @@ class LexGen:
 
     def refresh_trans_mats(self):
         # iterate over self.trans_mats
-        # call create_trans_mat for every row where last_updated = None
-        # update last_updated as you go
+        # call create_trans_mats for every row where last_updated = None
+        # call scan_trans_mats at the end
         pass
 
-    def create_trans_mat(self, corpus_name, corpus_file, trans_mat_file, prefix_len):
-        # trans_mat is a nested dictionary with structure as follows:
-        # Outer Dictionary key: the prefix
+    def create_trans_mats(self, corpus_name):
+        # use the corpora dataframe to lookup the associated filepath for the corpus_name provided
+        corpus_file_path = self.corpora.loc[self.corpora['corpus_name'] == corpus_name, 'corpus_filepath'].iloc[0]
+        # create a list of 4 dictionaries, one for each transition matrix
+        tms = [{} for i in range(4)]
+        # the transition matrix dictionaries will be nested dictionaries with structure as follows:
+        # Outer Dictionary key: the prefix (1 - 4 characters)
         # Outer Dictionary value: the Inner Dictionary
-        # Inner Dictinoary key: the suffix
-        # Inner Dictionary key: the frequency of transitioning to that suffix given the prefix (Outer Dictionary key)
+        # Inner Dictionary key: the suffix (1 character)
+        # Inner Dictionary value: the frequency of transitioning to that suffix given the prefix (Outer Dictionary key)
 
+        # create a list of 4 dictionaries, one for each cumulative frequency
+        tot_freqs = [{} for i in range(4)]
         # tot_freq is a dictionary with structure as follows:
-        # Outer Dictionary key: the prefix
-        # Inner Dictionary key: cumulative frequency for all transitions
+        # key: the prefix
+        # value: cumulative frequency for all transitions
 
         # read in all of the prefixes, suffixes, and frequencies
-        # for each line in a corpus
-            # read the word and pad with a whitespace before and after
-            # for each prefix in the word (prefix is a substring of length = prefix_len, don't include the last one)
-                # trans_mat[prefix][suffix] += frequency
-                # tot_freq[prefix] += frequency
+        with open(corpus_file_path, 'r') as c_file:
+            for line in c_file:
+                tokens = line.split(sep=' ')
+                word = tokens[0].strip()
+                print('word is: {0}'.format(word))
+                frequency = int(tokens[1])
+                print('frequency is: {0}'.format(str(frequency)))
+                word = ' ' + word + ' '
+                for i in range(1, len(word)):
+                    to_char = word[i]
+                    print('to_char is: {0}'.format(to_char))
+                    for t in range(4):
+                        from_substr = word[i-t-1:i] if i > t else None
+                        if t == 0:
+                            print('for i = {0}, t = {1} from_substr is: {2}'.format(str(i), str(t), from_substr))
+                        if from_substr in tms[t].values() and from_substr is not None:
+                            if to_char in tms[t][from_substr].values():
+                                tms[t][from_substr][to_char] = tms[t][from_substr][to_char] + frequency
+                            else:
+                                tms[t][from_substr][to_char] = frequency
+                        else:
+                            tms[t][from_substr] = {}
+                            tms[t][from_substr][to_char] = frequency
+                        if from_substr in tot_freqs[t].values():
+                            tot_freqs[t][from_substr] = tot_freqs[t][from_substr] + frequency
+                        else:
+                            tot_freqs[t][from_substr] = frequency
+
+        print(tms[0].values())
 
         # convert all of the frequencies to relative frequency
         # IS THIS STEP NECESSARY?

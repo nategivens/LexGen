@@ -2,6 +2,7 @@ from lexgen import LexGen
 
 # create and initialize a LexGen object
 lexgen = LexGen()
+
 # import a corpus
 
 # initialize all transition matrices that don't exist yet

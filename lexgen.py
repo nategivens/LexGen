@@ -103,7 +103,7 @@ class LexGen:
         # Inner Dictionary value: the frequency of transitioning to that suffix given the prefix (Outer Dictionary key)
 
         # create a list of 4 dictionaries, one for each cumulative frequency
-        tot_freqs = [{} for i in range(4)]
+        from_substr_freqs = [{} for i in range(4)]
         # tot_freq is a dictionary with structure as follows:
         # key: the prefix
         # value: cumulative frequency for all transitions
@@ -113,43 +113,87 @@ class LexGen:
             for line in c_file:
                 tokens = line.split(sep=' ')
                 word = tokens[0].strip()
-                print('word is: {0}'.format(word))
                 frequency = int(tokens[1])
-                print('frequency is: {0}'.format(str(frequency)))
                 word = ' ' + word + ' '
                 for i in range(1, len(word)):
                     to_char = word[i]
-                    print('to_char is: {0}'.format(to_char))
+                    # for each character in the word, we're going to iterate through our substring lengths = (1, 2, 3, 4)
+                    # (of course, the indicies are actually t = (0, 1, 2, 3) )
                     for t in range(4):
                         from_substr = word[i-t-1:i] if i > t else None
-                        if t == 0:
-                            print('for i = {0}, t = {1} from_substr is: {2}'.format(str(i), str(t), from_substr))
-                        if from_substr in tms[t].values() and from_substr is not None:
-                            if to_char in tms[t][from_substr].values():
+
+                        # now we're going to store the substrings and associated frequency in our transition matrix dictionaries
+                        # remember the structure of the these transition matrix dictionaries.
+                        # tms is a list of dictionaries, one dictionary for each substring length
+                        # for each dictionary, the outer key is from_substr and the value is another dictinoary with inner key / value
+                        # the inner key is the to_char
+                        # the inner value is the frequency of transition from outer key (from_substr) to inner key (to_char)
+
+                        # check to see if this from_substr has been found before
+                        if from_substr in tms[t].keys():
+                            # if the from_substr has been found before, check to see if the to_char has been associated with it
+                            if to_char in tms[t][from_substr].keys():
+                                # if we already have the from_substr / to_char pair before, update the frequence
                                 tms[t][from_substr][to_char] = tms[t][from_substr][to_char] + frequency
                             else:
+                                # if we already have the from_substr but not the to_char, add to_char: frequency to the dictionary
                                 tms[t][from_substr][to_char] = frequency
+                        elif from_substr is not None:
+                            # if we don't have
+                            # for the value, I need a dictionary with to_char as the key and frequency as the value
+                            tms[t][from_substr] = {to_char: frequency}
                         else:
-                            tms[t][from_substr] = {}
-                            tms[t][from_substr][to_char] = frequency
-                        if from_substr in tot_freqs[t].values():
-                            tot_freqs[t][from_substr] = tot_freqs[t][from_substr] + frequency
+                            # since from_substr is None, we ignore it
+                            pass
+
+                        # in this code block, we're going to update a total frequency for the outer keys (from_substr's)
+                        # this is so that we can convert all our conversion frequencyes from outer key (from_substr) to inner key (to_char)
+                        #    to relative frequencies
+                        if from_substr in from_substr_freqs[t].keys():
+                            # print('found one')
+                            from_substr_freqs[t][from_substr] = from_substr_freqs[t][from_substr] + frequency
+                        elif from_substr is not None:
+                            from_substr_freqs[t][from_substr] = frequency
                         else:
-                            tot_freqs[t][from_substr] = frequency
+                            pass
 
-        print(tms[0].values())
+        # in this code block we have iterated through the entire list of words
+        # tms[0], ... , tm[3] contain our complete transition matrices
+        # subst_freqs[0], ... , subst_freqs[3] contain the total occurrences of all substrings
+        #    Note: the sum of subst_freqs[t] may be greater than the sum of word occurrences.
+        #          This is because a from_subst can show up more than once in a single word
+        # now we're going to normalize these frequencies.
+        # The intent is that for any given from_subst, the total frequency of the to_chars will sum to 1
+        # This just makes it a lot easier to sample from, since we can use a simple U[0,1] distribution.
+        for t in range(4):
+            for key in from_substr_freqs[t].keys():
+                total_freq = from_substr_freqs[t][key]
+                for sub_key in tms[t][key].keys():
+                    tms[t][key][sub_key] = tms[t][key][sub_key] / total_freq
 
-        # convert all of the frequencies to relative frequency
-        # IS THIS STEP NECESSARY?
-        # for each key in Outer Dictionary
-            # prefix_freq = 0
-            # for each key in Inner Dictionary
-                # trans_mat[prefix][suffix] = trans_mat[prefix][prefix] / tot_freq[prefix]
+        # in this code block we are converting all of our transition matrices from nested dictionaries
+        #     into pandas dataframes
+        # create a list that will store the dataframes (one per substring length)
+        tm_dfs = []
+        for t in range(4):
+            substr_col = []
+            to_char_col = []
+            frequency_col = []
+            for outer_key in tms[t].keys():
+                for inner_key, value in tms[t][outer_key].items():
+                    substr_col.append(outer_key)
+                    to_char_col.append(inner_key)
+                    frequency_col.append(value)
+            data = list(zip(substr_col, to_char_col, frequency_col))
+            df = pd.DataFrame(data, columns=['from_str', 'to_char', 'rel_frequency'])
+            tm_dfs.append(df)
 
-        # write the output as a table:
-        # prefix | suffix | rel_trans_freq
-        # trans_mat_path = os.path.join(self.script_dir, 'data', 'trans_mats', trans_mat_file + '.dat')
-        pass
+        # write the output as a table
+        trans_mat_filenames = [corpus_name + '_tm' + str(t) + '.dat' for t in range(1, 5)]
+        for t in range(4):
+            trans_mat_path = os.path.join(self.script_dir, 'data', 'trans_mats', trans_mat_filenames[t])
+            tm_dfs[t].to_csv(trans_mat_path)
+
 
     def run(self):
         print('you ran lexgen')

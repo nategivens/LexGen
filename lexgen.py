@@ -7,11 +7,11 @@ from datetime import datetime
 class LexGen:
     def __init__(self):
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
-        self.lang_dict = None
+        self.languages = None
         self.corpora = None
         self.trans_mats = None
 
-        self.read_lang_dict()
+        self.scan_languages()
         # populates self.lang_dict pandas df with cols = [lang_code, lang_name]
         # later, this will become reading the languages table from a database
 
@@ -23,13 +23,13 @@ class LexGen:
         # populates trans_mats pandas df with cols = [corpus_name, prefix_len, trans_matrix_filepath]
         # later, this will become reading the transition_matrices table from a database
 
-    def read_lang_dict(self):
+    def scan_languages(self):
         # check to see if file exists
         # check to see if columns exist (and not extra columns)
         # check to see if data exists (rows > 0)
         # check to see if datatypes are valid (alphabetic strings, non-numeric)
         abs_fname = os.path.join(self.script_dir, 'data', 'ref', 'lang_ref.dat')
-        self.lang_dict = pd.read_csv(abs_fname)
+        self.languages = pd.read_csv(abs_fname, sep='|')
 
     def scan_corpora(self):
         # read all files in data/corpora subfolder of current directory
@@ -78,7 +78,10 @@ class LexGen:
 
         self.trans_mats = trans_mat_df
 
-    def load_corpus(self, corpus_name, corpus_file):
+    def load_corpus(self, corpus_name, corpus_file, corpus_language):
+        # first check that we have a corresponding language entry in lang_ref.dat
+        #     only want to load corpora for languages we know about
+        #
         # read in the corpus line by line
         # first string is word, second string (if exists) is frequency
         # get unique list of words with frequency
@@ -118,8 +121,10 @@ class LexGen:
                 for i in range(1, len(word)):
                     to_char = word[i]
                     # for each character in the word, we're going to iterate through our substring lengths = (1, 2, 3, 4)
-                    # (of course, the indicies are actually t = (0, 1, 2, 3) )
+                    # (of course, the indices are actually t = (0, 1, 2, 3) )
                     for t in range(4):
+                        # populate from_substr with the 1, 2, 3 or 4-char substring preceding to_char
+                        # if there are not enough characters, set from_substr to None
                         from_substr = word[i-t-1:i] if i > t else None
 
                         # now we're going to store the substrings and associated frequency in our transition matrix dictionaries
@@ -192,7 +197,7 @@ class LexGen:
         trans_mat_filenames = [corpus_name + '_tm' + str(t) + '.dat' for t in range(1, 5)]
         for t in range(4):
             trans_mat_path = os.path.join(self.script_dir, 'data', 'trans_mats', trans_mat_filenames[t])
-            tm_dfs[t].to_csv(trans_mat_path)
+            tm_dfs[t].to_csv(trans_mat_path, index=False, sep='|')
 
 
     def run(self):

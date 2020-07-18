@@ -6,6 +6,8 @@ The basic concept of LexGen is to read in large corpora (plural of 'corpus', it 
 
 To find the large corpora, I'm using subtitles from dubbed movies because I was able to find a big ole stack of data that contains lots and lots of words from many different languages. (Link coming, it's in my notes somewhere.) The corpora is basically a really long list of words along with a frequency of occurrence. Common words like "the" and "and" have a high frequency. Uncommon words (like "corpora") have much lower frequency.
 
+Chris Pound has a simplified version of what I'm doing that he calls the language confluxer, with [a GitHub repo here](https://github.com/boyska/lc/). He's got more interesting info on data sets and generators [on his site](http://generators.christopherpound.com/).
+
 ## Transiton Matrices
 The transition matrices are created by scanning the words and counting the number of times that a pattern of characters (between 1 and 4) transitions to another character. I'm creating 4 transition matrices for each corpus because I know English has distinctive patterns at least 4 characters long (e.g."ough" in "thought" or "drought"). 
 

@@ -6,6 +6,8 @@ The basic concept of LexGen is to read in large corpora (plural of 'corpus', it 
 
 To find the large corpora, I'm using subtitles from dubbed movies because I was able to find a big ole stack of data that contains lots and lots of words from many different languages. (Link coming, it's in my notes somewhere.) The corpora is basically a really long list of words along with a frequency of occurrence. Common words like "the" and "and" have a high frequency. Uncommon words (like "corpora") have much lower frequency.
 
+Chris Pound has a simplified version of what I'm doing that he calls the language confluxer, with [a GitHub repo here](https://github.com/boyska/lc/). He's got more interesting info on data sets and generators [on his site](http://generators.christopherpound.com/).
+
 ## Transiton Matrices
 The transition matrices are created by scanning the words and counting the number of times that a pattern of characters (between 1 and 4) transitions to another character. I'm creating 4 transition matrices for each corpus because I know English has distinctive patterns at least 4 characters long (e.g."ough" in "thought" or "drought"). 
 
@@ -66,8 +68,11 @@ Note that there's a lot of ambiguity around how to sample from four different tr
 
 As a final pass, we will compare each word that we generate with the original corpus to make sure that we don't accidentally pass along a "new" word that is actually just an already-existing one. I envision generating new words in patches of 10 - 100 or so, and we'll only consider *new* words (not in the corpus). Everything that's just a randomly-generated copy of an already-existing word will get discarded.
 
+## Corpora
+For starters, I'm using lists of words from [HermitDave's FrequencyWords repo](https://github.com/hermitdave/FrequencyWords). Those lists came originally from OpenSubtitle (see [HermitDave's repo](https://github.com/hermitdave/FrequencyWords) for more info and links back to original sources).
+
 # Status & Immediate Next Steps
-So far I have the logic for creating the transition matrices complete. Unfortunately, the data I'm using has some wonky characters in it. So my next step (next weekend) is to implement the load_corpus function to clean the data to only the characters that I expect for any given language. Once I have that done, I'll read in a few corpora and then begin work on implementing a generate_word function. Again: I implemented a toy version of this a year or two ago, so I know it can be done and yields pretty good results. I should have that done by August 2020. At that point, LexGen will be able to generate new words, but will have a pretty limited set of languages to operate on initially.
+So far I have the logic for creating the transition matrices complete. Unfortunately, the data I'm using has some wonky characters in it. So my next step is to implement the load_corpus function to clean the data to only the characters that I expect for any given language. Once I have that done, I'll read in a few corpora and then begin work on implementing a generate_word function. Again: I implemented a toy version of this a year or two ago, so I know it can be done and yields pretty good results. I should have that done by August 2020. At that point, LexGen will be able to generate new words, but will have a pretty limited set of languages to operate on initially.
 
 # Future Plans
 I have basically three longer-run goals for LexGen beyond the immediate next steps.

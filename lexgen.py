@@ -79,14 +79,18 @@ class LexGen:
         self.trans_mats = trans_mat_df
 
     def load_corpus(self, corpus_name, corpus_file, corpus_language):
-        # first check that we have a corresponding language entry in lang_ref.dat
+        # check that we have a corresponding language entry in lang_ref.dat
         #     only want to load corpora for languages we know about
-        #
-        # read in the corpus line by line
+        assert corpus_language in self.languages['lang_code'].values \
+               or corpus_language in self.languages['lang_name'].values, \
+               'please provide a valid language name or language code'
+        # check that the corpus name is unique
+        assert corpus_name not in self.corpora['corpus_name'].values, 'please provide unique corpus name'
+        # read the corpus into a dataframe using read_csv with space delimiter
         # first string is word, second string (if exists) is frequency
+        # new_corpus = pd.read_csv('corpus_file', delim_whitespace=True, header=None, names=['word', 'frequency'])
         # get unique list of words with frequency
         # write output to file: /data/corpora/{corpus_name}.dat
-        pass
 
     def refresh_trans_mats(self):
         # iterate over self.trans_mats

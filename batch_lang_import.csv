@@ -1,0 +1,44 @@
+﻿filename,lang_code,source_url,note
+pt_50k_2016.txt,pt,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/pt/pt_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Portuguese
+pt_full_2016.txt,pt,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/pt/pt_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Portuguese
+pt_50k_2018.txt,pt,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/pt/pt_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Portuguese
+pt_full_2018.txt,pt,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/pt/pt_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Portuguese
+pt-br_50k_2016.txt,pt-br,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/pt_br/pt_br_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Brazilian Portuguese
+pt-br_full_2016.txt,pt-br,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/pt_br/pt_br_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Brazilian Portuguese
+pt-br_50k_2018.txt,pt-br,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/pt_br/pt_br_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Brazilian Portuguese
+pt-br_full_2018.txt,pt-br,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/pt_br/pt_br_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Brazilian Portuguese
+ro_50k_2016.txt,ro,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/ro/ro_50k.txt,"Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Romanian, Moldavian, Moldovan"
+ro_full_2016.txt,ro,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/ro/ro_full.txt,"Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Romanian, Moldavian, Moldovan"
+ro_50k_2018.txt,ro,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/ro/ro_50k.txt,"Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Romanian, Moldavian, Moldovan"
+ro_full_2018.txt,ro,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/ro/ro_full.txt,"Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Romanian, Moldavian, Moldovan"
+sk_50k_2016.txt,sk,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sk/sk_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Slovak
+sk_full_2016.txt,sk,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sk/sk_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Slovak
+sk_50k_2018.txt,sk,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sk/sk_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Slovak
+sk_full_2018.txt,sk,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sk/sk_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Slovak
+sl_50k_2016.txt,sl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sl/sl_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Slovenian
+sl_full_2016.txt,sl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sl/sl_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Slovenian
+sl_50k_2018.txt,sl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sl/sl_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Slovenian
+sl_full_2018.txt,sl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sl/sl_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Slovenian
+sq_50k_2016.txt,sq,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sq/sq_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Albanian
+sq_full_2016.txt,sq,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sq/sq_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Albanian
+sq_50k_2018.txt,sq,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sq/sq_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Albanian
+sq_full_2018.txt,sq,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sq/sq_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Albanian
+sr_50k_2016.txt,sr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sr/sr_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Serbian
+sr_full_2016.txt,sr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sr/sr_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Serbian
+sr_50k_2018.txt,sr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sr/sr_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Serbian
+sr_full_2018.txt,sr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sr/sr_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Serbian
+sv_50k_2016.txt,sv,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sv/sv_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Swedish
+sv_full_2016.txt,sv,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/sv/sv_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Swedish
+sv_50k_2018.txt,sv,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sv/sv_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Swedish
+sv_full_2018.txt,sv,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/sv/sv_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Swedish
+tl_50k_2016.txt,tl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/tl/tl_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Tagalog
+tl_full_2016.txt,tl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/tl/tl_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Tagalog
+tl_full_2018.txt,tl,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tl/tl_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Tagalog
+tr_50k_2016.txt,tr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/tr/tr_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Turkish
+tr_full_2016.txt,tr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/tr/tr_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Turkish
+tr_50k_2018.txt,tr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Turkish
+tr_full_2018.txt,tr,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Turkish
+vi_50k_2016.txt,vi,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/vi/vi_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2016) for Vietnamese
+vi_full_2016.txt,vi,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2016/vi/vi_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2016) for Vietnamese
+vi_50k_2018.txt,vi,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/vi/vi_50k.txt,Hermit Dave\'s version of the top 50k words from OpenSubtitles (2018) for Vietnamese
+vi_full_2018.txt,vi,https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/vi/vi_full.txt,Hermit Dave\'s version of the full list of words from OpenSubtitles (2018) for Vietnamese
